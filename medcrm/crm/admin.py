@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Representative, Program, Client, Schedule, ClientPlan
+
+registered = [Representative, Program, Client, Schedule, ClientPlan]
+
+for r in registered:
+    admin.site.register(r)
