@@ -10,7 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from pathlib import Path
+from django.contrib.messages import constants
+
 AUTH_USER_MODEL = "crm.Representative"
+
+MESSAGE_TAGS = {
+    constants.DEBUG: "alert-secondary",
+    constants.INFO: "alert-info",
+    constants.SUCCESS: "alert-success",
+    constants.WARNING: "alert-warning",
+    constants.ERROR: "alert-danger",
+}
 
 from pathlib import Path
 
@@ -112,6 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = (str(Path(__file__).parent.parent / "crm"),)
+STATIC_ROOT = Path(__file__).parent.parent / "crm" / "static"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

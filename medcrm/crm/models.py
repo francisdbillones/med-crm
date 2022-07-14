@@ -4,13 +4,13 @@ from django.contrib.auth.models import User, AbstractUser
 
 
 class Representative(AbstractUser):
-    username = models.CharField(max_length=50, unique=True, null=True, blank=None)
-    password = models.CharField(max_length=50, unique=False, null=True, blank=None)
-    firstname = models.CharField(max_length=50)
-    lastname = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254, null=True, blank=True)
-    phone = models.CharField(max_length=20, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to="representative_pfps")
+    username = models.CharField(max_length=50, unique=True, null=True, blank=False)
+    password = models.CharField(max_length=50, unique=False, null=True, blank=False)
+    firstname = models.CharField(max_length=50, null=True, blank=False)
+    lastname = models.CharField(max_length=50, null=True, blank=False)
+    email = models.EmailField(max_length=254, null=True, blank=False)
+    phone = models.CharField(max_length=20, null=True, blank=False)
+    profile_picture = models.ImageField(upload_to="representative_pfps", null=True, blank=True)
 
     class Meta:
         constraints = [
