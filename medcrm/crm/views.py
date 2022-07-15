@@ -39,7 +39,7 @@ def login(r: HttpRequest) -> HTTPResponse:
 
 
 def logout(r: HttpRequest) -> HttpResponse:
-    if r.user is not None:
+    if r.user.is_authenticated:
         auth.logout(r)
         messages.success(r, "Logout successful.")
     else:
