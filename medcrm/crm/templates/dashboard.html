@@ -1,5 +1,37 @@
 {% extends "generic_base.html" %}
 
+{% load static %}
+
+{% block nav_items %}
+
+<li class="nav-item">
+    <a class="nav-link active" href="/crm">Dashboard</a>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Clients</a>
+
+    <ul class="dropdown-menu">
+        {% for client in more_clients %}
+        <li>
+            <a class="dropdown-item" href="/crm/clients/{{ client.id }}">
+                <img src="{% static client.pfp_path %}">
+            </a>
+        </li>
+        {% endfor %}
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a class="dropdown-item" href="/crm/clients">
+                See all clients
+            </a>
+        </li>
+    </ul>
+</li>
+
+{% endblock %}
+
 {% block main %}
 this is the dashboard
 {% endblock %}
