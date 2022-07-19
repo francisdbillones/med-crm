@@ -5,25 +5,33 @@
 {% block nav_items %}
 
 <li class="nav-item">
-    <a class="nav-link active" href="/crm">Dashboard</a>
+    <a class="nav-link active" href="/crm/dashboard">Dashboard</a>
 </li>
 
+{% for client in clients_to_show_in_navbar %}
+<li class="nav-item">
+    <a class="nav-link" href="/crm/dashboard/clients/{{ client.id }}">{{ client.lastname }}</a>
+</li>
+{% endfor %}
+
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Clients</a>
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">More clients</a>
 
     <ul class="dropdown-menu">
+        {% if more_clients %}
         {% for client in more_clients %}
         <li>
-            <a class="dropdown-item" href="/crm/clients/{{ client.id }}">
+            <a class="dropdown-item" href="/crm/dashboard/clients/{{ client.id }}">
                 <img src="{% static client.pfp_path %}">
             </a>
         </li>
         {% endfor %}
+        {% endif %}
         <li>
             <hr class="dropdown-divider">
         </li>
         <li>
-            <a class="dropdown-item" href="/crm/clients">
+            <a class="dropdown-item" href="/crm/dashboard/clients">
                 See all clients
             </a>
         </li>

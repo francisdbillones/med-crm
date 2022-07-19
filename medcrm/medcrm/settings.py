@@ -131,3 +131,7 @@ STATIC_ROOT = Path(__file__).parent.parent / "crm" / "static"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# My settings
+N_CLIENTS_TO_SHOW_IN_NAVBAR = 5
+N_CLIENTS_TO_SHOW_IN_DROPDOWN = 5
