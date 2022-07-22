@@ -1,4 +1,3 @@
-import django.contrib.auth as auth
 import django.forms as forms
 
 

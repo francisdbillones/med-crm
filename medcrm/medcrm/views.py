@@ -4,11 +4,9 @@ from django.http import HttpRequest, HttpResponse
 
 import django.contrib.auth as auth
 import django.contrib.messages as messages
-from django.conf import settings
 
-from ..forms import LoginForm
-from ..helpers import login_required
-from ..models import Representative, Client, ClientPlan, Program, Schedule
+from .forms import LoginForm
+from .helpers import login_required
 
 
 def login(r: HttpRequest) -> HTTPResponse:
@@ -22,7 +20,7 @@ def login(r: HttpRequest) -> HTTPResponse:
         if user is not None:
             auth.login(r, user)
             messages.success(r, "Login successful.")
-            return redirect("/") # redirect to index
+            return redirect("/")
 
         else:
             messages.error(
@@ -35,3 +33,8 @@ def login(r: HttpRequest) -> HTTPResponse:
 @login_required
 def logout(r: HttpRequest) -> HttpResponse:
     auth.logout(r)
+
+
+@login_required
+def landing_page(r: HttpRequest) -> HttpResponse:
+    return redirect("clients")

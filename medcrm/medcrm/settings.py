@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants
 
-AUTH_USER_MODEL = "crm.Representative"
+AUTH_USER_MODEL = "representatives.Representative"
 
 MESSAGE_TAGS = {
     constants.DEBUG: "alert-secondary",
@@ -40,13 +40,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = "/crm/login"
-LOGIN_REDIRECT_URL = "/crm/dashboard"
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"
 
 # Application definition
 
 INSTALLED_APPS = [
-    "crm.apps.CrmConfig",
+    "clients",
+    "representatives",
     "django.contrib.auth",
     "django.contrib.admin",
     "django.contrib.messages",
@@ -123,8 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = (str(Path(__file__).parent.parent / "crm"),)
-STATIC_ROOT = Path(__file__).parent.parent / "crm" / "static"
 
 
 # Default primary key field type
