@@ -46,12 +46,10 @@ def dashboard(r: HttpRequest) -> HttpResponse:
 
 @login_required
 def view_clients(r: HttpRequest) -> HttpResponse:
-    print(r.user.id)
     client_plans = ClientPlan.objects.filter(representative=r.user.id)
     client_ids = client_plans.values("client")
     clients = Client.objects.filter(id__in=client_ids)
 
-    import json
-    from django.core import serializers
+    context = {"clients": clients}
 
-    return HttpResponse(json.dumps(serializers.serialize('json', clients)), content_type="application/json")
+    return render(r, "dashboard.html", context=context)
