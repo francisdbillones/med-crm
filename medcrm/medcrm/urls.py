@@ -22,7 +22,7 @@ from .views import login, logout, landing_page
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("clients/", include("clients.urls", namespace="clients")),
-    path("", landing_page),
+    path("", landing_page, name="landing_page"),
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
 ]

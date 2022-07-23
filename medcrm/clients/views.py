@@ -11,11 +11,8 @@ from .models import Representative, Client, ClientPlan, Program, Schedule
 
 @login_required
 def clients_list(r: HttpRequest) -> HttpResponse:
-    client_ids = ClientPlan.objects.filter(representative__id=r.user.id).values(
-        "client"
-    )
+    client_ids = ClientPlan.objects.filter(representative=r.user.id).values("client")
     clients = Client.objects.filter(id__in=client_ids)
-
     if clients.count() > settings.N_CLIENTS_TO_SHOW_IN_NAVBAR:
         clients_to_show_in_navbar = clients[: settings.N_CLIENTS_TO_SHOW_IN_NAVBAR]
         more_clients = clients[settings.N_CLIENTS_TO_SHOW_IN_NAVBAR :][

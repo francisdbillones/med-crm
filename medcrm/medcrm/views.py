@@ -34,7 +34,9 @@ def login(r: HttpRequest) -> HTTPResponse:
 def logout(r: HttpRequest) -> HttpResponse:
     auth.logout(r)
 
+    return redirect("login")
+
 
 @login_required
 def landing_page(r: HttpRequest) -> HttpResponse:
-    return redirect("clients")
+    return redirect("clients/")
