@@ -2,15 +2,24 @@
 
 {% load static %}
 
-{% block nav_items %}
+{% block left_nav_items %}
 
 <li class="nav-item">
-    <a class="nav-link" href="/">Client {{ client.firstname }} {{ client.lastname }}</a>
+    <a class="nav-link" href="/">Dashboard</a>
 </li>
 
-{% for client in clients_to_show_in_navbar %}
+{% endblock %}
+
+{% block right_nav_items %}
+
+{% for navbar_client in clients_to_show_in_navbar %}
+
 <li class="nav-item">
-    <a class="nav-link" href="/clients/{{ client.id }}">{{ client.lastname }}</a>
+{% if navbar_client.id == client.id %}
+    <a class="nav-link active" href="/clients/{{ navbar_client.id }}">{{ navbar_client.lastname }}</a>
+    {% else %}
+    <a class="nav-link" href="/clients/{{ navbar_client.id }}">{{ navbar_client.lastname }}</a>
+    {% endif %}
 </li>
 {% endfor %}
 
@@ -19,10 +28,10 @@
 
     <ul class="dropdown-menu">
         {% if more_clients %}
-        {% for client in more_clients %}
+        {% for navbar_client in more_clients %}
         <li>
-            <a class="dropdown-item" href="/clients/{{ client.id }}">
-                <img src="{% static client.pfp_path %}">
+            <a class="dropdown-item" href="/clients/{{ navbar_client.id }}">
+                <img src="{% static navbar_client.pfp_path %}">
             </a>
         </li>
         {% endfor %}
@@ -37,5 +46,11 @@
         </li>
     </ul>
 </li>
+
+{% endblock %}
+
+{% block main %}
+
+This is the page for {{ client.firstname }} {{ client.lastname }}
 
 {% endblock %}

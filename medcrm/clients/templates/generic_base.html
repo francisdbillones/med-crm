@@ -30,7 +30,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {% block nav_items %}{% endblock %}
+                    {% block left_nav_items %}{% endblock %}
+                </ul>
+                <ul class="navbar-nav me-4 mb-2 mb-lg-0 d-flex">
+                    {% block right_nav_items %}{% endblock %}
                 </ul>
             </div>
         </div>
