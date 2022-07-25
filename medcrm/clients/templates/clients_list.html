@@ -1,6 +1,7 @@
 {% extends "generic_base.html" %}
 
 {% load static %}
+{% load obj_dmp %}
 
 {% block left_nav_items %}
 
@@ -42,4 +43,17 @@
     </ul>
 </li>
 
+{% endblock %}
+
+{% block main %}
+<ul>
+{% for client in clients %}
+<li>
+    <a href="/clients/{{ client.id }}">Client {{ client.firstname }} {{ client.lastname }}</a>
+    <br>
+    Object dump: <br>
+    {{ client | obj_dmp | safe }}
+</li>
+{% endfor %}
+</ul>
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends "generic_base.html" %}
 
 {% load static %}
+{% load obj_dmp %}
 
 {% block left_nav_items %}
 
@@ -50,7 +51,9 @@
 {% endblock %}
 
 {% block main %}
-
-This is the page for {{ client.firstname }} {{ client.lastname }}
+<br>
+Object dump:
+<br>
+{{ client | obj_dmp | safe }}
 
 {% endblock %}
