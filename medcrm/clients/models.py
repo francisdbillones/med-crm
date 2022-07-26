@@ -15,8 +15,7 @@ class Client(Model):
     email = models.EmailField(max_length=254, null=True, blank=False)
     phone = models.CharField(max_length=20, null=True, blank=False)
     specialty = models.CharField(max_length=100, null=True, blank=False)
-    office_latitude = models.FloatField(null=True, blank=False)
-    office_longitude = models.FloatField(null=True, blank=False)
+    geolocation_url = models.URLField(null=True, blank=False)
     profile_picture = models.ImageField(upload_to="client_pfps", null=True, blank=False)
 
     class Meta:

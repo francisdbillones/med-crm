@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse
 
@@ -40,3 +40,9 @@ class ClientDetailView(DetailView, LoginRequiredMixin):
         )
 
         return context
+
+
+class ClientCreateView(CreateView, LoginRequiredMixin):
+    model = Client
+    fields = ["firstname", "lastname", "email", "phone", "specialty", "profile_picture", "geolocation_url"]
+    template_name = "clients/client_create.html"
