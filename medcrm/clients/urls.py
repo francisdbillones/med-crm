@@ -7,5 +7,5 @@ app_name = "clients"
 urlpatterns = [
     path("", ClientListView.as_view(), name="client_list"),
     path("<int:pk>", ClientDetailView.as_view(), name="client_detail"),
-    path("<int:pk>/create", ClientCreateView.as_view(), name="client_create")
+    path("create", ClientCreateView.as_view(), name="client_create"),
 ]
