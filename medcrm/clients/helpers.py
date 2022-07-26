@@ -5,7 +5,8 @@ from .models import Client, ClientPlan
 
 
 def navbar_clients(r: HttpRequest):
-    clients = ClientPlan.objects.filter(representative=r.user.id).values("client")
+    client_ids = ClientPlan.objects.filter(representative=r.user.id).values("client")
+    clients = Client.objects.filter(id__in=client_ids)
     if clients.count() > settings.N_CLIENTS_TO_SHOW_IN_NAVBAR:
         clients_to_show_in_navbar = clients[: settings.N_CLIENTS_TO_SHOW_IN_NAVBAR]
         more_clients = clients[settings.N_CLIENTS_TO_SHOW_IN_NAVBAR :][
