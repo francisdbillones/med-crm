@@ -11,6 +11,7 @@ from .helpers import navbar_clients
 class ClientListView(generic.ListView, LoginRequiredMixin):
     model = Client
     paginate_by = 5
+    template_name = "clients/client_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,6 +29,7 @@ class ClientListView(generic.ListView, LoginRequiredMixin):
 
 class ClientDetailView(generic.DetailView, LoginRequiredMixin):
     model = Client
+    template_name = "clients/client_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,3 +57,17 @@ class ClientCreateView(generic.CreateView, LoginRequiredMixin):
         "profile_picture",
     ]
     template_name = "clients/client_create.html"
+
+
+class ClientEditView(generic.UpdateView, LoginRequiredMixin):
+    model = Client
+    fields = [
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "specialty",
+        "geolocation_url",
+        "profile_picture",
+    ]
+    template_name = "clients/client_edit.html"
