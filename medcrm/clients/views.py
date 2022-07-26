@@ -44,5 +44,5 @@ class ClientDetailView(DetailView, LoginRequiredMixin):
 
 class ClientCreateView(CreateView, LoginRequiredMixin):
     model = Client
-    fields = ["firstname", "lastname", "email", "phone", "specialty", "profile_picture", "geolocation_url"]
+    fields = ["firstname", "lastname", "email", "phone", "specialty", "geolocation_url", "profile_picture"]
     template_name = "clients/client_create.html"
