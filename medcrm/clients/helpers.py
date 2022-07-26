@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.db.models import QuerySet, Model
-from .models import Client
+from django.http import HttpRequest
+from .models import Client, ClientPlan
 
 
-def navbar_clients(clients: QuerySet):
+def navbar_clients(r: HttpRequest):
+    clients = ClientPlan.objects.filter(representative=r.user.id).values("client")
     if clients.count() > settings.N_CLIENTS_TO_SHOW_IN_NAVBAR:
         clients_to_show_in_navbar = clients[: settings.N_CLIENTS_TO_SHOW_IN_NAVBAR]
         more_clients = clients[settings.N_CLIENTS_TO_SHOW_IN_NAVBAR :][

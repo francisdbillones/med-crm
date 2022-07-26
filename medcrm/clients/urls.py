@@ -1,10 +1,10 @@
 from django.shortcuts import redirect
 from django.urls import path
-from .views import ClientListView, client_detail
+from .views import ClientListView, ClientDetailView
 
 app_name = "clients"
 
 urlpatterns = [
-    path("", ClientListView.as_view(), name="clients_list"),
-    path("<int:pk>", client_detail, name="client_detail"),
+    path("", ClientListView.as_view(), name="client_list"),
+    path("<int:pk>", ClientDetailView.as_view(), name="client_detail"),
 ]

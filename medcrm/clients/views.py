@@ -1,4 +1,4 @@
-from django.views.generic.list import ListView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse
 
@@ -13,7 +13,7 @@ class ClientListView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        clients_to_show_in_navbar, more_clients = navbar_clients(context["object_list"])
+        clients_to_show_in_navbar, more_clients = navbar_clients(self.request)
 
         context.update(
             {
@@ -25,19 +25,18 @@ class ClientListView(ListView, LoginRequiredMixin):
         return context
 
 
-@login_required
-def client_detail(r: HttpRequest, pk: int) -> HttpResponse:
-    client_ids = ClientPlan.objects.filter(representative=r.user.id).values("client")
-    clients = Client.objects.filter(id__in=client_ids)
+class ClientDetailView(DetailView, LoginRequiredMixin):
+    model = Client
 
-    client = Client.objects.get(id=pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        clients_to_show_in_navbar, more_clients = navbar_clients(self.request)
 
-    clients_to_show_in_navbar, more_clients = navbar_clients(clients)
+        context.update(
+            {
+                "clients_to_show_in_navbar": clients_to_show_in_navbar,
+                "more_clients": more_clients,
+            }
+        )
 
-    context = {
-        "client": client,
-        "clients_to_show_in_navbar": clients_to_show_in_navbar,
-        "more_clients": more_clients,
-    }
-
-    return render(r, "client_detail.html", context=context)
+        return context
