@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Model, Q
+from django.urls import reverse
 
 from representatives.models import Representative
 
@@ -25,6 +26,9 @@ class Client(Model):
                 name="client_email_or_phone_not_null",
             )
         ]
+
+    def get_absolute_url(self) -> str:
+        return reverse("client_detail", kwargs={"pk": self.id})
 
 
 class Schedule(Model):

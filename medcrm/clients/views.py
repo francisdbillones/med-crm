@@ -1,13 +1,14 @@
-from django.views.generic import ListView, DetailView, CreateView
-from django.shortcuts import redirect, render
+import django.forms as forms
+from django.urls import reverse
+import django.views.generic as generic
 from django.http import HttpRequest, HttpResponse
 
-from medcrm.helpers import LoginRequiredMixin, login_required
+from medcrm.helpers import LoginRequiredMixin
 from .models import Representative, Client, ClientPlan, Program, Schedule
 from .helpers import navbar_clients
 
 
-class ClientListView(ListView, LoginRequiredMixin):
+class ClientListView(generic.ListView, LoginRequiredMixin):
     model = Client
     paginate_by = 5
 
@@ -25,7 +26,7 @@ class ClientListView(ListView, LoginRequiredMixin):
         return context
 
 
-class ClientDetailView(DetailView, LoginRequiredMixin):
+class ClientDetailView(generic.DetailView, LoginRequiredMixin):
     model = Client
 
     def get_context_data(self, **kwargs):
@@ -42,7 +43,15 @@ class ClientDetailView(DetailView, LoginRequiredMixin):
         return context
 
 
-class ClientCreateView(CreateView, LoginRequiredMixin):
+class ClientCreateView(generic.CreateView, LoginRequiredMixin):
     model = Client
-    fields = ["firstname", "lastname", "email", "phone", "specialty", "geolocation_url", "profile_picture"]
+    fields = [
+        "firstname",
+        "lastname",
+        "email",
+        "phone",
+        "specialty",
+        "geolocation_url",
+        "profile_picture",
+    ]
     template_name = "clients/client_create.html"
