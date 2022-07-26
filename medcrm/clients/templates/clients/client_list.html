@@ -47,7 +47,7 @@
 
 {% block main %}
 <ul>
-{% for client in clients %}
+{% for client in object_list %}
 <li>
     <a href="/clients/{{ client.id }}">Client {{ client.firstname }} {{ client.lastname }}</a>
     <br>

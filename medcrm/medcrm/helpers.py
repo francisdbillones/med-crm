@@ -5,6 +5,7 @@ import django.contrib.messages as messages
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import resolve_url
 
 
@@ -57,3 +58,13 @@ def login_required(
     if function is not None:
         return actual_decorator(function)
     return actual_decorator
+
+
+class LoginRequiredMixin(AccessMixin):
+    """Verify that the current user is authenticated."""
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "You need to be logged in for that.")
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)

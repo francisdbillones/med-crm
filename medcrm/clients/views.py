@@ -1,29 +1,28 @@
+from django.views.generic.list import ListView
 from django.shortcuts import redirect, render
 from django.http import HttpRequest, HttpResponse
 
-import django.contrib.auth as auth
-import django.contrib.messages as messages
-from django.conf import settings
-
-from medcrm.helpers import login_required
+from medcrm.helpers import LoginRequiredMixin, login_required
 from .models import Representative, Client, ClientPlan, Program, Schedule
 from .helpers import navbar_clients
 
 
-@login_required
-def clients_list(r: HttpRequest) -> HttpResponse:
-    client_ids = ClientPlan.objects.filter(representative=r.user.id).values("client")
-    clients = Client.objects.filter(id__in=client_ids)
+class ClientListView(ListView, LoginRequiredMixin):
+    model = Client
+    paginate_by = 5
 
-    clients_to_show_in_navbar, more_clients = navbar_clients(clients)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        clients_to_show_in_navbar, more_clients = navbar_clients(context["object_list"])
 
-    context = {
-        "clients": clients,
-        "clients_to_show_in_navbar": clients_to_show_in_navbar,
-        "more_clients": more_clients,
-    }
+        context.update(
+            {
+                "clients_to_show_in_navbar": clients_to_show_in_navbar,
+                "more_clients": more_clients,
+            }
+        )
 
-    return render(r, "clients_list.html", context=context)
+        return context
 
 
 @login_required
