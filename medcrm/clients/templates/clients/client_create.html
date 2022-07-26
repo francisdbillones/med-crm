@@ -1,7 +1,6 @@
 {% extends "generic_base.html" %}
 
 {% load static %}
-{% load obj_dmp %}
 
 {% block left_nav_items %}
 
@@ -52,7 +51,7 @@
 
 {% block main %}
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Save</button>

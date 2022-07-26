@@ -53,6 +53,15 @@
     <br>
     Object dump: <br>
     {{ client | obj_dmp | safe }}
+
+    <br>
+
+    Client geolocation embed:<br>
+    {{ client.geolocation_url | safe }}
+
+    <br>
+    Client pfp:<br>
+    <img src="{{ client.profile_picture.url }}">
 </li>
 {% endfor %}
 </ul>

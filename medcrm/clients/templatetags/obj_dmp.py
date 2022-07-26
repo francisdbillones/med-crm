@@ -11,6 +11,7 @@ def obj_dmp(obj: Model):
     from json import loads
 
     ret = loads(serializers.serialize("json", (obj,))[1:-1])
+    print(ret)
     ret = pformat(ret, indent=2, width=20)
     ret = ret.replace("\n", "<br>")
     return ret

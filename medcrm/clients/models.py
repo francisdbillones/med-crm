@@ -28,7 +28,7 @@ class Client(Model):
         ]
 
     def get_absolute_url(self) -> str:
-        return reverse("client_detail", kwargs={"pk": self.id})
+        return reverse("clients:client_detail", kwargs={"pk": self.id})
 
 
 class Schedule(Model):
