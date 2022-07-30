@@ -13,9 +13,9 @@ class Lead(models.Model):
     first_name = models.CharField(max_length=20, null=True, blank=False)
     last_name = models.CharField(max_length=20, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL)
-    specialty = models.CharField()
-    description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    specialty = models.CharField(max_length=100, null=True, blank=False)
+    description = models.TextField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=False, unique=True)
     profile_picture = models.ImageField(null=True, blank=True, upload_to="lead_pfps")
 
@@ -28,7 +28,7 @@ class Lead(models.Model):
         constraints = [
             models.CheckConstraint(
                 check=models.Q(email__isnull=False) | models.Q(phone__isnull=False),
-                name="email_or_phone_not_null",
+                name="lead_email_or_phone_not_null",
             )
         ]
 
@@ -39,8 +39,8 @@ class Program(models.Model):
 
 
 class LeadPlan(models.Model):
-    lead = models.ForeignKey(Lead, on_delete=models.CASCADE)
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, on_delete=models.PROTECT)
+    agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
 
     outlet_geolocation_url = models.URLField(null=True, blank=False)
     outlet_name = models.CharField(max_length=50, null=True, blank=False)
@@ -49,7 +49,7 @@ class LeadPlan(models.Model):
 
 class Schedule(models.Model):
     datetime = models.DateTimeField(null=True, blank=False)
-    agent_plan = models.ForeignKey(LeadPlan, on_delete=models.SET_NULL)
+    agent_plan = models.ForeignKey(LeadPlan, on_delete=models.CASCADE)
 
 
 class TargetProduct(models.Model):

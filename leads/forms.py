@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
-from .models import Lead, Lead, Category, FollowUp
+from .models import Lead, Category
 
 User = get_user_model()
 
@@ -13,8 +13,6 @@ class LeadModelForm(forms.ModelForm):
         fields = (
             "first_name",
             "last_name",
-            "age",
-            "agent",
             "description",
             "phone_number",
             "email",
@@ -70,7 +68,7 @@ class CategoryModelForm(forms.ModelForm):
         fields = ("name",)
 
 
-class FollowUpModelForm(forms.ModelForm):
-    class Meta:
-        model = FollowUp
-        fields = ("notes", "file")
+# class FollowUpModelForm(forms.ModelForm):
+#     class Meta:
+#         model = FollowUp
+#         fields = ("notes", "file")

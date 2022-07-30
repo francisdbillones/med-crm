@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from leads.models import User, UserProfile
-
 
 class Agent(AbstractUser):
     # fields already defined by AbstractUser:
@@ -29,6 +27,6 @@ class Agent(AbstractUser):
         constraints = [
             models.CheckConstraint(
                 check=models.Q(email__isnull=False) | models.Q(phone__isnull=False),
-                name="email_or_phone_not_null",
+                name="agent_email_or_phone_not_null",
             )
         ]
