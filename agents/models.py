@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from djcrm.helpers import all_is_digit
+
 
 class Agent(AbstractUser):
     # fields already defined by AbstractUser:
@@ -16,12 +18,12 @@ class Agent(AbstractUser):
         max_length=15,
         null=True,
         blank=False,
-        validators=[lambda s: all(c.isdigit() for c in s)],
+        validators=[all_is_digit],
     )
     profile_picture = models.ImageField(upload_to="agent_pfps", null=True, blank=True)
 
     def __str__(self):
-        return self.user.email
+        return self.email
 
     class Meta:
         constraints = [
