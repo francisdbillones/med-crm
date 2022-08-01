@@ -8,6 +8,7 @@ from django.contrib.auth.views import (
 from django.urls import path, include
 from leads.views import LandingPageView, DashboardView
 
+from .views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
