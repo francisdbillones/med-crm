@@ -68,10 +68,6 @@ class DashboardView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-def landing_page(request):
-    return render(request, "landing.html")
-
-
 class LeadListView(LoginRequiredMixin, generic.ListView):
     template_name = "leads/lead_list.html"
     model = Lead
