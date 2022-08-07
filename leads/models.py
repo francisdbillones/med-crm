@@ -16,7 +16,7 @@ class Lead(models.Model):
     email = models.EmailField(null=True, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     specialty = models.CharField(max_length=100, null=True, blank=False)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=False, blank=True, default="No description")
     phone = models.CharField(
         max_length=15,
         null=True,
