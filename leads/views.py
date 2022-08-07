@@ -207,14 +207,14 @@ class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "leads/category_detail.html"
     context_object_name = "category"
 
-    def get_queryset(self):
-        user = self.request.user
-        # initial queryset of leads for the entire organisation
-        if user.is_organisor:
-            queryset = Category.objects.filter(organisation=user.userprofile)
-        else:
-            queryset = Category.objects.filter(organisation=user.agent.organisation)
-        return queryset
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     # initial queryset of leads for the entire organisation
+    #     if user.is_staff:
+    #         queryset = Category.objects.filter(organisation=user.userprofile)
+    #     else:
+    #         queryset = Category.objects.filter(organisation=user.agent.organisation)
+    #     return queryset
 
 
 class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
@@ -267,17 +267,7 @@ class CategoryDeleteView(LoginRequiredMixin, generic.DeleteView):
 class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "leads/lead_category_update.html"
     form_class = LeadCategoryUpdateForm
-
-    def get_queryset(self):
-        user = self.request.user
-        # initial queryset of leads for the entire organisation
-        if user.is_organisor:
-            queryset = Lead.objects.filter(organisation=user.userprofile)
-        else:
-            queryset = Lead.objects.filter(organisation=user.agent.organisation)
-            # filter for the agent that is logged in
-            queryset = queryset.filter(agent__user=user)
-        return queryset
+    model = Lead
 
     def get_success_url(self):
         return reverse("leads:lead-detail", kwargs={"pk": self.get_object().id})
