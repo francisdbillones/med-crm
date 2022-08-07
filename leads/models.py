@@ -9,6 +9,9 @@ from djcrm.helpers import all_is_digit
 class Category(models.Model):
     name = models.CharField(max_length=20, null=True, blank=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Lead(models.Model):
     first_name = models.CharField(max_length=20, null=True, blank=False)
@@ -44,6 +47,9 @@ class Program(models.Model):
     name = models.CharField(max_length=30, null=True, blank=False)
     description = models.TextField(null=True, blank=False)
 
+    def __str__(self):
+        return self.name
+
 
 class LeadPlan(models.Model):
     lead = models.ForeignKey(Lead, on_delete=models.PROTECT)
@@ -53,10 +59,16 @@ class LeadPlan(models.Model):
     outlet_name = models.CharField(max_length=50, null=True, blank=False)
     outlet_description = models.TextField(null=True, blank=False)
 
+    def __str__(self):
+        return f"LeadPlan {self.lead} with agent {self.agent}"
+
 
 class Schedule(models.Model):
     datetime = models.DateTimeField(null=True, blank=False)
     agent_plan = models.ForeignKey(LeadPlan, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Schedule for {self.agent_plan} on {self.datetime.strftime('%d-%b-%Y at %H:%M')}"
 
 
 class TargetProduct(models.Model):
