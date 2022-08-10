@@ -89,12 +89,6 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
             return context
 
 
-def lead_list(request):
-    leads = Lead.objects.all()
-    context = {"leads": leads}
-    return render(request, "leads/lead_list.html", context)
-
-
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "leads/lead_detail.html"
     model = Lead
@@ -145,14 +139,10 @@ class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class LeadDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "leads/lead_delete.html"
+    model = Lead
 
     def get_success_url(self):
         return reverse("leads:lead-list")
-
-    def get_queryset(self):
-        user = self.request.user
-        # initial queryset of leads for the entire organisation
-        return Lead.objects.filter(organisation=user.userprofile)
 
 
 class AssignAgentView(LoginRequiredMixin, generic.FormView):

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load get_category_color %}
+
 {% block content %}
 
 <section class="text-gray-700 body-font overflow-hidden">
@@ -11,18 +13,16 @@
                         <div class="flex items-center space-x-3">
                             <h3 class="text-3xl text-gray-900 font-medium truncate">{{ lead.first_name }} {{ lead.last_name }}</h3>
                         </div>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-{{ lead.category | get_category_color }}-600 bg-{{ lead.category | get_category_color }}-200 uppercase last:mr-0 mr-1">{{ lead.category }}</span>
                         <p class="mt-1 text-xl text-gray-500 truncate">{{ lead.description }}</p>
                     </div>
                     {% if lead.profile_picture %}
-                    <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="{{ lead.profile_picture.url }}" alt="">
+                    <img class="w-20 h-20 bg-gray-300 rounded-full flex-shrink-0" src="{{ lead.profile_picture.url }}" alt="">
                     {% endif %}
                 </div>
                 <div class="flex mb-4">
                     <a href="{% url 'leads:lead-detail' lead.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
                         Overview
-                    </a>
-                    <a href="{% url 'leads:lead-category-update' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-                        Category
                     </a>
                     <a href="{% url 'leads:lead-update' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
                         Update Details
@@ -30,15 +30,15 @@
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
                     <span class="text-gray-500">Age</span>
-                    <span class="ml-auto text-gray-900">{{ lead.age }}</span>
+                    <span class="ml-auto text-gray-900">{{ lead.display_age | safe }}</span>
                 </div>
                 <div class="flex border-t border-gray-300 py-2">
                     <span class="text-gray-500">Email</span>
-                    <span class="ml-auto text-gray-900">{{ lead.email }}</span>
+                    <span class="ml-auto text-gray-900">{{ lead.display_email | safe }}</span>
                 </div>
                 <div class="flex border-t border-b mb-6 border-gray-300 py-2">
                     <span class="text-gray-500">Phone Number</span>
-                    <span class="ml-auto text-gray-900">{{ lead.phone_number }}</span>
+                    <span class="ml-auto text-gray-900">{{ lead.display_phone | safe }}</span>
                 </div>
             </div>
         </div>

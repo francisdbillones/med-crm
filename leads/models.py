@@ -17,6 +17,7 @@ class Lead(models.Model):
     first_name = models.CharField(max_length=20, null=True, blank=False)
     last_name = models.CharField(max_length=20, null=True, blank=False)
     email = models.EmailField(null=True, blank=False)
+    age = models.IntegerField(null=True, blank=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     specialty = models.CharField(max_length=100, null=True, blank=False)
     description = models.TextField(null=False, blank=True, default="No description")
@@ -33,6 +34,32 @@ class Lead(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def display_first_name(self):
+        return str(self.first_name) if self.first_name else ""
+
+    def display_last_name(self):
+        return str(self.last_name) if self.last_name else ""
+
+    def display_age(self):
+        if self.age is None:
+            return "Age not specified"
+        return f"<strong>{self.age}</strong>"
+
+    def display_email(self):
+        if self.email is None:
+            return "Email not specified"
+        return f"<strong>{self.email}</strong>"
+
+    def display_phone(self):
+        if self.phone is None:
+            return "Phone number not specified"
+        return f"<strong>{self.phone}</strong>"
+
+    def display_description(self):
+        if self.description is None:
+            return "No description"
+        return str(self.description)
 
     class Meta:
         constraints = [
