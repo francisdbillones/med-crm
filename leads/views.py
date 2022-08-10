@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.views import generic
 from .models import Lead, Lead, Category, LeadPlan
 from .forms import (
@@ -128,12 +128,27 @@ class LeadUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Lead
     form_class = LeadModelForm
 
+    def get(self, r, *args, **kwargs):
+        return super().get(r, *args, **kwargs)
+
     def get_success_url(self):
+        print(Lead.objects.get(id=self.kwargs.get("pk")).converted_date)
         return reverse("leads:lead-list")
 
     def form_valid(self, form):
+        lead = Lead.objects.get(id=self.kwargs.get("pk"))
+
+        new_category = Category.objects.get(id=form["category"].value())
+
         form.save(commit=True)
-        messages.info(self.request, "You have successfully updated this lead")
+
+        if lead.category != new_category:
+            if lead.category.name == "Unconverted":
+                lead.converted_date = datetime.datetime.now()
+            elif lead.category.name == "Converted":
+                lead.converted_date = None
+
+        messages.success(self.request, "You have successfully updated this lead")
         return super(LeadUpdateView, self).form_valid(form)
 
 
