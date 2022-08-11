@@ -8,12 +8,18 @@
     <div class="container px-5 py-24 mx-auto flex flex-wrap">
         <div class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200">
             <div>
-                <h1 class="text-4xl text-gray-800">Leads</h1>
+                <h1 class="text-4xl text-gray-800">
+                {% if request.user.is_staff %}
+                Assigned leads
+                {% else %}
+                Your assigned leads
+                {% endif %}
+                </h1>
                 <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:category-list' %}">
                     View categories
                 </a>
             </div>
-            {% if request.user.is_organisor %}
+            {% if request.user.is_staff %}
             <div>
                 <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-create' %}">
                     Create a new lead
@@ -53,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for lead in leads %}
+                        {% for lead in assigned_leads %}
                             <tr class="bg-white">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     <a class="text-blue-500 hover:text-blue-800" href="{% url 'leads:lead-detail' lead.pk %}">{{ lead.display_last_name | safe }}</a>
@@ -90,7 +96,13 @@
 
                         {% empty %}
 
-                        <p>There are currently no leads</p>
+                        <p>
+                        {% if request.user.is_staff %}
+                        There are no assigned leads
+                        {% else %}
+                        You have no assigned leads
+                        {% endif %}
+                        </p>
 
                         {% endfor %}
                     </tbody>
@@ -114,9 +126,11 @@
                             </svg>
                         </div>
                         <div class="flex-grow">
-                            <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+                        <h2 class="text-lg title-font font-medium mb-3">
+                            <a class="text-gray-900 hover:text-indigo-500" href="{% url 'leads:lead-detail' lead.pk %}">
                                 {{ lead.display_first_name }} {{ lead.display_last_name }}
-                            </h2>
+                            </a>
+                        </h2>
                             <p class="leading-relaxed text-base">
                                 {{ lead.display_description }}
                             </p>

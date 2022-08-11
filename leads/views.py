@@ -77,16 +77,16 @@ class LeadListView(LoginRequiredMixin, generic.ListView):
         context = super(LeadListView, self).get_context_data(**kwargs)
         user = self.request.user
 
-        if not user.is_staff:
-            return context
+        context["assigned_leads"] = Lead.objects.filter(
+            id__in=LeadPlan.objects.all().values("lead")
+        )
 
-        else:
-            unassigned_leads = Lead.objects.exclude(
+        if user.is_staff:
+            context["unassigned_leads"] = Lead.objects.exclude(
                 id__in=LeadPlan.objects.all().values("lead")
             )
 
-            context.update({"unassigned_leads": unassigned_leads})
-            return context
+        return context
 
 
 class LeadDetailView(LoginRequiredMixin, generic.DetailView):
