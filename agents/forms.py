@@ -6,5 +6,6 @@ from .models import Agent
 
 
 class AgentModelForm(forms.ModelForm):
-    model = Agent
-    fields = ("email", "username", "first_name", "last_name")
+    class Meta:
+        model = Agent
+        fields = ("email", "username", "first_name", "last_name")
